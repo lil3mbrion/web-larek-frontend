@@ -66,5 +66,11 @@ export const settings = {
     closeButton: ".modal__close",
     content: ".modal__content",
     activeClass: ".modal_active"
+  },
+  pageContainer: ".page",
+  pageSettings: {
+    logoImage: ".header__logo-image",
+    basketButton: ".header__basket",
+    catalog: ".gallery"
   }
 };

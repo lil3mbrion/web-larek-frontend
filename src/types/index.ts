@@ -11,6 +11,7 @@ interface IBasketModel {
   items: Map<string ,IProduct>;
   add(id: string): void;
   remove(id: string): void
+  clear(): void;
 }
 
 type ApiListResponse<Type> = {
@@ -41,7 +42,7 @@ type Contacts = {
   phone: string; 
 }
 
-type locationPayment = {
+type LocationPayment = {
   payment: Payment;
   adress: string;
 }
@@ -86,9 +87,10 @@ interface IAppModel {
   addProduct(id: string): void;
   removeProduct(id: string): void;
   clearBasket(): void;
-  fillOrder(info: locationPayment): void;
+  fillOrder(info: LocationPayment): void;
   fillContacts(contacts: Contacts): void;
-  isValidForm(): boolean;
+  isValidOrderForm(): boolean;
+  isValidContactsForm(): boolean;
   openModal(modal: AppModal): void;
   closeModal(): void;
 }
@@ -162,6 +164,12 @@ interface SuccessSettings {
   title: string;
   description: string;
   button: HTMLButtonElement;
+}
+
+interface PageSettings {
+  logoImage: string;
+  basketButton: HTMLButtonElement;
+  catalog: CardCatalogSettings[];
 }
 
 
