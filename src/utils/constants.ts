@@ -26,21 +26,22 @@ export const settings = {
     image: ".card__image",
     category: ".card__category",
     title: ".card__title",
-    price: ".card__price"
+    price: ".card__price",
+    openButton: ".gallery__item"
   },
   basketTemplate: '#basket',
   basketSettings: {
     modalTitle: ".modal__title",
-    itemListContainer: "basket__list",
+    itemListContainer: ".basket__list",
     itemList: ['li', { className: 'basket__item' }],
-    basketButton: ".basket__button",
+    basketButton: ".button",
     totalPrice: ".basket__price"
   },
   orderTemplate: '#order',
   orderTemplateSettings: {
     modalTitle: ".modal__title",
-    onlineButton: ".button_alt",
-    offlineButton: ".button_alt",
+    onlineButton: ".button-card",
+    offlineButton: ".button-cash",
     adressLabel: ".form__label",
     adressInput: ".form__input",
     orderButton: ".order__button",
@@ -49,9 +50,9 @@ export const settings = {
   contactsTemplate: '#contacts',
   contactsSettings: {
     emailLabel: ".form__label",
-    emailInput: ".form__input",
+    emailInput: ".input__email",
     phoneLabel: ".form__label",
-    phoneInput: ".form__input",
+    phoneInput: ".input__phone",
     button: ".button",
     formErrors: ".form__errors"
   },
@@ -61,16 +62,17 @@ export const settings = {
     description: ".order-success__description",
     button: ".order-success__close"
   },
-  modalContainer: '#modal__container',
+  modalContainer: '#modal-container',
   modalSettings: {
     closeButton: ".modal__close",
     content: ".modal__content",
-    activeClass: ".modal_active"
+    activeClass: "modal_active"
   },
   pageContainer: ".page",
   pageSettings: {
     logoImage: ".header__logo-image",
     basketButton: ".header__basket",
-    catalog: ".gallery"
+    catalog: ".gallery",
+    basketCounter: ".header__basket-counter"
   }
 };

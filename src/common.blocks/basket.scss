@@ -6,6 +6,16 @@
   gap: 2rem;
   height: 100%;
 
+  &__empty-message {
+    text-align: left;
+    list-style-type: none;
+    padding: 28px 0px 28px 0px;
+    font-weight: 400;
+    font-size: 30px;
+    color: #666;
+    font-family: "YS Text";
+  }
+
   &__list {
     padding: 0;
     margin: 0;

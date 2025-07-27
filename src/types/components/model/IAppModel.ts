@@ -1,0 +1,42 @@
+import { IProduct } from "./IProduct";
+import { IOrder } from "./IOrder";
+import { AppModal } from "../..";
+import { IWebApi } from "./IWebApi";
+import { Payment } from "../..";
+import { IOrderResponse } from "./IOrderResponse";
+import { LocationPayment } from "../..";
+import { Contacts } from "../..";
+export interface IAppModel {
+  products: IProduct[];
+  selectedProduct: IProduct;
+  basket: IProduct[];
+  basketTotal: number;
+  order: Partial<IOrder>;
+  openedModal: AppModal;
+  validationErrorMessage: string | null;
+  webApi: IWebApi;
+  address: string;
+  selectedPayment: Payment;
+  phone: string;
+  email: string;
+  isOrderValid: boolean;
+  isContactsValid: boolean;
+  isBasketValid: boolean;
+  
+  getProducts: () => Promise<{ total: number; items: IProduct[] }>;
+  getProduct: (id: string) => Promise<IProduct>;
+  createOrder: (order: IOrder) => Promise<IOrderResponse>;
+  selectProduct(id: string): void;
+  isProductInBasket(id: string): boolean;
+  addItemsOrder(): void;
+  addProduct(id: string): void;
+  removeProduct(id: string): void;
+  clearBasket(): void;
+  fillOrder(info: LocationPayment): void;
+  fillContacts(contacts: Contacts): void;
+  isValidOrderForm(): void;
+  isValidContactsForm(): void;
+  setOpenedModal(modal: AppModal): void;
+  updateBasketTotal(): void;
+  isBasketEmpty(): void;
+}
