@@ -12,7 +12,7 @@ export class Page implements IView {
   catalog: HTMLElement;
   basketCounter: HTMLSpanElement;
 
-  constructor(protected container: HTMLElement, protected events: IEvents, protected appModel: AppModel) {
+  constructor(protected container: HTMLElement, protected events: IEvents, protected appModel: AppModel, protected cardCatalog: CardCatalog) {
     this.logoimage = container.querySelector(settings.pageSettings.logoImage) as HTMLImageElement;
     this.basketButton = container.querySelector(settings.pageSettings.basketButton) as HTMLButtonElement;
     this.catalog = container.querySelector(settings.pageSettings.catalog) as HTMLElement;
@@ -32,13 +32,13 @@ export class Page implements IView {
   }
   
   addCatalogCards(products: IProduct[]): void {
-    const template = document.querySelector(settings.cardCatalogTemplate) as HTMLTemplateElement;
     products.forEach(product => {
+      const template = document.querySelector(settings.cardCatalogTemplate) as HTMLTemplateElement;
       const cardElement = template.content.cloneNode(true) as DocumentFragment;
       const cardContainer = cardElement.firstElementChild as HTMLElement;
-      const card = new CardCatalog(cardContainer, this.events);
-      this.catalog.appendChild(card.render(product));
-    })
+      this.cardCatalog.render(cardContainer, product);
+      this.catalog.appendChild(cardContainer);
+    });
   }
 
   render(data: {basketCount: number}) {

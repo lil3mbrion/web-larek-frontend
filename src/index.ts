@@ -12,16 +12,20 @@ import { Success } from './components/view/Success';
 import { Page } from './components/view/Page';
 import { Modal } from './components/view/Modal';
 import { cloneTemplate } from './utils/utils';
+import { CardCompact } from './components/view/CardCompact';
+import { CardCatalog } from './components/view/CardCatalog';
 
 const webApi = new WebApi(API_URL);
 const eventEmitter = new EventEmitter();
 const appModel = new AppModel(webApi, eventEmitter);
 const cardFull = new CardFull(cloneTemplate(settings.cardFullTemplate), eventEmitter, appModel);
-const basketView = new BasketView(cloneTemplate(settings.basketTemplate), eventEmitter);
+const cardCompact = new CardCompact(cloneTemplate(settings.cardCompactTemplate), eventEmitter);
+const cardCatalog = new CardCatalog(eventEmitter);
+const basketView = new BasketView(cloneTemplate(settings.basketTemplate), eventEmitter, cardCompact);
 const order = new Order(cloneTemplate(settings.orderTemplate), eventEmitter);
 const contacts = new Contact(cloneTemplate(settings.contactsTemplate), eventEmitter);
 const success = new Success(cloneTemplate(settings.successTemplate), eventEmitter);
-const page = new Page(document.querySelector(settings.pageContainer), eventEmitter, appModel);
+const page = new Page(document.querySelector(settings.pageContainer), eventEmitter, appModel, cardCatalog);
 const modalContainer = document.querySelector(settings.modalContainer) as HTMLElement;
 const modal = new Modal(modalContainer, eventEmitter);
 
@@ -113,18 +117,12 @@ eventEmitter.on('ui:email-input', (event: { value: string }) => {
   appModel.isValidContactsForm();
 });
 
-eventEmitter.on(AppStateEvent.orderValidationChanged, (event: { isValid: boolean }) => {
-  order.render({
-    isValid: event.isValid,
-    formErrors: event.isValid ? '' : 'Необходимо указать адрес и способ оплаты'
-  });
+eventEmitter.on(AppStateEvent.orderValidationChanged, (event: { isValid: boolean; formErrors: string }) => {
+  order.render(event);
 });
 
-eventEmitter.on(AppStateEvent.contactsValidationChanged, (event: { isValid: boolean }) => {
-  contacts.render({
-    isValid: event.isValid,
-    formErrors: event.isValid ? '' : 'Необходимо указать номер телефона и email'
-  });
+eventEmitter.on(AppStateEvent.contactsValidationChanged, (event: { isValid: boolean; formErrors: string }) => {
+  contacts.render(event);
 });
 
 eventEmitter.on('ui:order-submit', (event: {selected: Payment , adress: string}) => {

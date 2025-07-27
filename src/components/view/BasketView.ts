@@ -12,7 +12,7 @@ export class BasketView implements IView {
   button: HTMLButtonElement;
   emptyMessage: HTMLLIElement;
 
-  constructor(protected container: HTMLElement, protected events: IEvents) {
+  constructor(protected container: HTMLElement, protected events: IEvents, protected cardCompact: CardCompact) {
     this.emptyMessage = document.createElement('li');
     this.emptyMessage.className = 'basket__empty-message';
     this.emptyMessage.textContent = 'Корзина пуста';
@@ -40,13 +40,10 @@ export class BasketView implements IView {
     } else {
       
       data.items.forEach((product, index) => {
-        const itemElement = cloneTemplate(settings.cardCompactTemplate);
-        const item = new CardCompact(itemElement, this.events);
-        item.render({ 
+        this.itemListContainer.appendChild(this.cardCompact.render({ 
           product, 
           index: index + 1 
-        });
-        this.itemListContainer.appendChild(itemElement);
+        }));
       }); 
       this.button.disabled = false;
     }

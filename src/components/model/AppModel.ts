@@ -99,12 +99,20 @@ export class AppModel implements IAppModel {
 
   isValidOrderForm(): void {
     this.isOrderValid = Boolean((this.address !== '') && (this.selectedPayment !== null));
-    this.events.emit(AppStateEvent.orderValidationChanged, { isValid: this.isOrderValid });
+    this.validationErrorMessage = this.isOrderValid ? '' : 'Необходимо указать адрес и способ оплаты';
+    this.events.emit(AppStateEvent.orderValidationChanged, { 
+      isValid: this.isOrderValid,
+      formErrors: this.validationErrorMessage 
+    });
   }
 
   isValidContactsForm(): void {
     this.isContactsValid = Boolean((this.phone !== '') && (this.email !== ''));
-    this.events.emit(AppStateEvent.contactsValidationChanged, { isValid: this.isContactsValid });
+    this.validationErrorMessage = this.isContactsValid ? '' : 'Необходимо указать номер телефона и email';
+    this.events.emit(AppStateEvent.contactsValidationChanged, { 
+      isValid: this.isContactsValid,
+      formErrors: this.validationErrorMessage 
+    });
   }
 
   setOpenedModal(modal: AppModal) {

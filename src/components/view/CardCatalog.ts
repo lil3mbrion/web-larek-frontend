@@ -4,7 +4,7 @@ import { settings } from "../../utils/constants";
 import { IProduct } from "../../types/components/model/IProduct";
 import { CDN_URL } from "../../utils/constants";
 
-export class CardCatalog implements IView {
+export class CardCatalog {
   image: HTMLImageElement;
   title: HTMLHeadingElement;
   category: HTMLSpanElement;
@@ -12,28 +12,20 @@ export class CardCatalog implements IView {
   openButton: HTMLButtonElement;
 
   protected id: string | null = null;
+  constructor(protected events: IEvents) {}
 
-  constructor(protected container: HTMLElement, protected events: IEvents) {
-    this.image = container.querySelector(settings.cardCatalogSettings.image) as HTMLImageElement;
-    this.title = container.querySelector(settings.cardCatalogSettings.title) as HTMLHeadingElement;
-    this.category = container.querySelector(settings.cardCatalogSettings.category) as HTMLSpanElement;
-    this.price = container.querySelector(settings.cardCatalogSettings.price) as HTMLSpanElement;
-    
-    this.container.addEventListener('click', () => {
-      this.events.emit('ui:open-modal', { id: this.id })
-    })
-    
-  }
-
-  render(data: IProduct) {
-    if (data) {
-      this.id = data.id
-      this.image.src = `${CDN_URL}${data.image}`
-      this.title.textContent = data.title
-      this.category.textContent = data.category
-      this.price.textContent = data.price === null ? "Бесценно" : `${data.price} синапсов`;
-    }
-
-    return this.container;
+  render(container: HTMLElement, data: IProduct) {
+    const image = container.querySelector(settings.cardCatalogSettings.image) as HTMLImageElement;
+      const title = container.querySelector(settings.cardCatalogSettings.title) as HTMLHeadingElement;
+      const category = container.querySelector(settings.cardCatalogSettings.category) as HTMLSpanElement;
+      const price = container.querySelector(settings.cardCatalogSettings.price) as HTMLSpanElement;
+      image.src = `${CDN_URL}${data.image}`;
+      title.textContent = data.title;
+      category.textContent = data.category;
+      price.textContent = data.price === null ? "Бесценно" : `${data.price} синапсов`;
+      container.addEventListener('click', () => {
+          this.events.emit('ui:open-modal', { id: data.id });
+      });
+      return container;
   }
 }
